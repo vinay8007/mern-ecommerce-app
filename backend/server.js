@@ -30,5 +30,3 @@ app.get('/',(req,res)=> {
 
 app.listen(port, ()=> console.log('Server started on PORT: '+ port))
 
-// username- ecommrce-app, pass-vinay8007
-// mongodb+srv://ecommrce-app:<db_password>@cluster0.va9ayhd.mongodb.net/

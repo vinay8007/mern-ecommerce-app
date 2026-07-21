@@ -78,4 +78,9 @@ const singleProduct = async (req, res) => {
     }
 }
 
-export {listProducts,addProduct, removeProduct,singleProduct}
+// function for seedProducts
+const seedProducts = async (req, res) => {
+
+}
+
+export {listProducts,addProduct, removeProduct,singleProduct, seedProducts}

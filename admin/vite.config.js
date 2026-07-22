@@ -13,6 +13,6 @@ export default defineConfig({
   },
   preview: {
     host: '0.0.0.0',
-    allowedHosts: ['*'],
+    allowedHosts: ['mern-ecommerce-admin-n0ni.onrender.com'],
   },
 })

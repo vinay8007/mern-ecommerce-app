@@ -40,7 +40,8 @@ const PlaceOrder = () => {
   };
 
   const initPay = (order) => {
-    
+    console.log("ENV =", import.meta.env);
+    console.log("KEY =", import.meta.env.VITE_RAZORPAY_KEY_ID);
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amount: order.amount,

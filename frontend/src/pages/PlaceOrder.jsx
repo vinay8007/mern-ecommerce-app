@@ -46,31 +46,36 @@ const PlaceOrder = () => {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amount: order.amount,
       currency: order.currency,
-      name: 'Order Payment',
-      description: 'Order Payment',
+      name: "Order Payment",
+      description: "Order Payment",
       // order_id: order._id,
       order_id: order.id,
       receipt: order.receipt,
-      handler : async (response) =>{
-        console.log(response)
+      handler: async (response) => {
+        console.log(response);
         try {
-          const { data } = await axios.post(backendUrl + '/api/order/verifyRazorpay',response,{headers:{token}})
-          if(data.success){
-            navigate('/orders')
-            setCartItems({})
+          const { data } = await axios.post(
+            backendUrl + "/api/order/verifyRazorpay",
+            response,
+            { headers: { token } }
+          );
+          if (data.success) {
+            navigate("/orders");
+            setCartItems({});
           }
         } catch (error) {
           console.log(error);
-          toast.error(error)
+          toast.error(error);
         }
-      }
-    }
-    const rzp = new window.Razorpay(options)
-    rzp.open()
-  }
+      },
+    };
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+  };
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+
     try {
       let orderItems = [];
 
@@ -98,19 +103,34 @@ const PlaceOrder = () => {
       switch (method) {
         // API Calls for COD
         case "cod": {
-          const response = await axios.post(backendUrl + '/api/order/place',orderData,{headers:{token}});
-          if(response.data.success){
-            setCartItems({})
-            navigate('/orders')
+          const response = await axios.post(
+            backendUrl + "/api/order/place",
+            orderData,
+            { headers: { token } }
+          );
+          if (response.data.success) {
+            setCartItems({});
+            navigate("/orders");
           } else {
-            toast.error(response.data.message)
+            toast.error(response.data.message);
           }
           break;
         }
         case "razorpay": {
-          const responseRazorpay = await axios.post(backendUrl + '/api/order/razorpay', orderData, {headers:{token}})
+          console.log("Calling Razorpay API...");
+          console.log("Backend URL:", backendUrl);
+          console.log("Order Data:", orderData);
+          const responseRazorpay = await axios.post(
+            backendUrl + "/api/order/razorpay",
+            orderData,
+            { headers: { token } }
+          );
+
+          console.log("Razorpay API Response:", responseRazorpay.data);
+
           if (responseRazorpay.data.success) {
-            initPay(responseRazorpay.data.order)
+            console.log("Razorpay order created:", responseRazorpay.data.order);
+            initPay(responseRazorpay.data.order);
           }
 
           break;
@@ -120,7 +140,7 @@ const PlaceOrder = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.message)
+      toast.error(error.message);
     }
   };
 

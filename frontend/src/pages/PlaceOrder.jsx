@@ -75,6 +75,7 @@ const PlaceOrder = () => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
+    console.log("PlaceOrder token:", token);
 
     try {
       let orderItems = [];

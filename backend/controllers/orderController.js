@@ -10,7 +10,7 @@ const deliveryCharge = 10;
 // gateway initialize
 const razorpayInstance = new razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
+  key_secret: process.env.RAZORPAY_SECRET_KEY,
 });
 
 // Placing orders using COD Method
@@ -85,7 +85,7 @@ const verifyRazorpay = async (req, res) => {
     const body = razorpay_order_id + "|" + razorpay_payment_id;
 
     const expectedSignature = crypto
-      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
+      .createHmac("sha256", process.env.RAZORPAY_SECRET_KEY)
       .update(body.toString())
       .digest("hex");
 

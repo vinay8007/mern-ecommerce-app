@@ -40,8 +40,7 @@ const PlaceOrder = () => {
   };
 
   const initPay = (order) => {
-    console.log("ENV =", import.meta.env);
-    console.log("KEY =", import.meta.env.VITE_RAZORPAY_KEY_ID);
+    
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amount: order.amount,
@@ -52,7 +51,7 @@ const PlaceOrder = () => {
       order_id: order.id,
       receipt: order.receipt,
       handler: async (response) => {
-        console.log(response);
+        // console.log(response);
         try {
           const { data } = await axios.post(
             backendUrl + "/api/order/verifyRazorpay",
@@ -75,8 +74,7 @@ const PlaceOrder = () => {
 
   const onSubmitHandler = async (event) => {
     event.preventDefault();
-    console.log("PlaceOrder token:", token);
-
+    
     try {
       let orderItems = [];
 
@@ -118,20 +116,17 @@ const PlaceOrder = () => {
           break;
         }
         case "razorpay": {
-          console.log("Calling Razorpay API...");
-          console.log("Backend URL:", backendUrl);
-          console.log("Order Data:", orderData);
+          
           const responseRazorpay = await axios.post(
             backendUrl + "/api/order/razorpay",
             orderData,
             { headers: { token } }
           );
 
-          console.log("Razorpay API Response:", responseRazorpay.data);
-
           if (responseRazorpay.data.success) {
-            console.log("Razorpay order created:", responseRazorpay.data.order);
+      
             initPay(responseRazorpay.data.order);
+
           }
 
           break;

@@ -189,8 +189,6 @@ const ShopContextProvider = (props) => {
   // =========================
   useEffect(() => {
     if (token) {
-      console.log("Logged-in token found:", token.substring(0, 20) + "...");
-
       getUserCart(token);
     } else {
       console.log("No login token found");

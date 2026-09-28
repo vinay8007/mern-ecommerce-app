@@ -11,6 +11,7 @@ const Login = () => {
 
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
 
   const onSubmitHandler = async (event) => {
@@ -99,14 +100,24 @@ const Login = () => {
         placeholder="email"
         required
       />
-      <input
-        onChange={(e) => setPassword(e.target.value)}
-        value={password}
-        type="password"
-        className="w-full px-3 py-2 border border-gray-800"
-        placeholder="password"
-        required
-      />
+      <div className="relative w-full">
+        <input
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+          type={showPassword ? "text" : "password"}
+          className="w-full px-3 py-2 pr-10 border border-gray-800"
+          placeholder="password"
+          required
+        />
+
+        <button
+          type="button"
+          onClick={() => setShowPassword(!showPassword)}
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-600"
+        >
+          {showPassword ? "👁️" : "🙈"}
+        </button>
+      </div>
       <div className="w-full flex justify-between text-sm mt-[-8px]">
         <p className="cursor-pointer">Forgot your password?</p>
         {currentState === "Login" ? (

@@ -82,20 +82,58 @@ const verifyRazorpay = async (req, res) => {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature } =
       req.body;
 
+    // Create signature body
     const body = razorpay_order_id + "|" + razorpay_payment_id;
 
+    // Generate expected signature
     const expectedSignature = crypto
       .createHmac("sha256", process.env.RAZORPAY_SECRET_KEY)
       .update(body.toString())
       .digest("hex");
 
+    // Verify Razorpay signature
     if (expectedSignature === razorpay_signature) {
       const orderInfo = await razorpayInstance.orders.fetch(razorpay_order_id);
 
+      // Check payment status
       if (orderInfo.status === "paid") {
+        // Find our order using Razorpay receipt
+        const order = await orderModel.findById(orderInfo.receipt);
+
+        if (!order) {
+          return res.json({
+            success: false,
+            message: "Order not found",
+          });
+        }
+
+        // Mark order as paid
         await orderModel.findByIdAndUpdate(orderInfo.receipt, {
           payment: true,
         });
+
+        // =========================
+        // CLEAR USER CART FROM MONGODB
+        // =========================
+        console.log("CLEARING CART FOR USER:", order.userId);
+        const updatedUser = await userModel.findByIdAndUpdate(
+          order.userId,
+          {
+            cartData: {},
+          },
+          {
+            new: true,
+          }
+        );
+
+        console.log("CART CLEARED SUCCESSFULLY:", updatedUser.cartData);
+
+        if (!updatedUser) {
+          return res.json({
+            success: false,
+            message: "User not found while clearing cart",
+          });
+        }
 
         res.json({
           success: true,

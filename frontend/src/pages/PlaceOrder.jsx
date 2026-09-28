@@ -59,8 +59,8 @@ const PlaceOrder = () => {
             { headers: { token } }
           );
           if (data.success) {
-            navigate("/orders");
             setCartItems({});
+            navigate("/orders");
           }
         } catch (error) {
           console.log(error);

@@ -15,6 +15,7 @@ const Add = ({ token }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [oldPrice, setOldPrice] = useState("");
   const [category, setCategory] = useState("Men");
   const [subCategory, setSubCategory] = useState("Topwear");
   const [bestseller, setBestseller] = useState(false);
@@ -29,6 +30,9 @@ const Add = ({ token }) => {
       formData.append("name", name);
       formData.append("description", description);
       formData.append("price", price);
+      if (oldPrice) {
+        formData.append("oldPrice", oldPrice);
+      }
       formData.append("category", category);
       formData.append("subCategory", subCategory);
       formData.append("bestseller", bestseller);
@@ -60,11 +64,8 @@ const Add = ({ token }) => {
     } catch (error) {
       console.log(error);
       toast.error(error.message);
-      
 
-      toast.error(
-        error.response?.data?.message || error.message
-      )
+      toast.error(error.response?.data?.message || error.message);
     }
   };
 
@@ -187,6 +188,17 @@ const Add = ({ token }) => {
             className="w-full px-3 py-2 sm:w-[120px]"
             type="Number"
             placeholder="25"
+          />
+        </div>
+
+        <div>
+          <p className="mb-2">Old Price (Optional)</p>
+          <input
+            onChange={(e) => setOldPrice(e.target.value)}
+            value={oldPrice}
+            className="w-full px-3 py-2 sm:w-[120px]"
+            type="number"
+            placeholder="50"
           />
         </div>
       </div>

@@ -58,13 +58,13 @@ const Add = ({ token }) => {
         setImage3(false);
         setImage4(false);
         setPrice("");
+        setOldPrice("");
       } else {
         toast.error(response.data.message);
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.message);
-
+     
       toast.error(error.response?.data?.message || error.message);
     }
   };

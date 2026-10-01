@@ -261,6 +261,29 @@ const List = ({ token }) => {
                       <option value="Winterwear">Winterwear</option>
                     </select>
                   </div>
+
+                  {/* Bestseller */}
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      id={`bestseller-${item._id}`}
+                      checked={Boolean(editingProduct.bestseller)}
+                      onChange={(e) =>
+                        setEditingProduct({
+                          ...editingProduct,
+                          bestseller: e.target.checked,
+                        })
+                      }
+                      className="cursor-pointer"
+                    />
+
+                    <label
+                      htmlFor={`bestseller-${item._id}`}
+                      className="cursor-pointer"
+                    >
+                      Add to bestseller
+                    </label>
+                  </div>
                 </div>
 
                 {/* ---------- Buttons ---------- */}

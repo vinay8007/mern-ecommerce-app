@@ -263,11 +263,11 @@ const List = ({ token }) => {
                   </div>
 
                   {/* Bestseller */}
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 mt-4">
                     <input
                       type="checkbox"
                       id={`bestseller-${item._id}`}
-                      checked={Boolean(editingProduct.bestseller)}
+                      checked={Boolean(editingProduct.bestseller === true)}
                       onChange={(e) =>
                         setEditingProduct({
                           ...editingProduct,
